@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import '../../../constants/app_assets/app_icons.dart';
 import '../../../global/app_theme/app_colors.dart';
 import '../../../global/widget/app_text_widget.dart';
+import '../../../responsive/responsive.dart';
 import '../models/patient_model.dart';
 import '../notifications/views/notifications_list_screen.dart';
 import '../widgets/patient_tile_widget.dart';
@@ -52,12 +53,15 @@ class PatientGridScreen extends StatelessWidget {
                 ),
                 IconButton(
                   icon: SvgPicture.asset(
+
                     AppIcons.notificationIcon,
-                    width: buttonIconSize,
-                    height: buttonIconSize,
+                    width: 44,
+                    height: 44,
                   ),
                   onPressed: () {
-                    Get.to( NotificationsListScreen(),);
+                    Get.to(
+                      const NotificationsListScreen(),
+                    );
                     // Navigator.push(
                     //   context,
                     //   MaterialPageRoute(
@@ -70,10 +74,10 @@ class PatientGridScreen extends StatelessWidget {
             ),
             Padding(
               padding: EdgeInsets.only(left: width * 0.02),
-              child: AppTextWidget(
+              child: const AppTextWidget(
                 text: 'Patients',
                 color: AppColors.darkTextColor,
-                fontSize: fontSize,
+                fontSize:34,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -81,7 +85,7 @@ class PatientGridScreen extends StatelessWidget {
               child: GridView.builder(
                 padding: EdgeInsets.all(width * 0.02),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
+                  crossAxisCount: Responsive.isMobile(context) ? 1 : 2,
                   crossAxisSpacing: width * 0.02,
                   mainAxisSpacing: height * 0.01,
                   childAspectRatio:
@@ -89,7 +93,9 @@ class PatientGridScreen extends StatelessWidget {
                 ),
                 itemCount: patients.length,
                 itemBuilder: (context, index) {
-                  return PatientTile(patient: patients[index]);
+                  return PatientTile(
+                    patient: patients[index],
+                  );
                 },
               ),
             ),

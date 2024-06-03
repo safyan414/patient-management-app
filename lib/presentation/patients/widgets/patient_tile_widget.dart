@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../../../global/app_theme/app_colors.dart';
 import '../models/patient_model.dart';
 
@@ -35,9 +36,10 @@ class PatientTile extends StatelessWidget {
           Expanded(
             child: Text(
               patient.patientName,
-              style: TextStyle(
-                fontSize: nameFontSize, // Adjust font size based on screen width
-                fontWeight: FontWeight.bold,
+              style: GoogleFonts.poppins(
+                fontSize: 24, // Adjust font size based on screen width
+                fontWeight: FontWeight.w600,
+
               ),
             ),
           ),
@@ -50,9 +52,12 @@ class PatientTile extends StatelessWidget {
           SizedBox(width: horizontalSpacing),
           Text(
             patient.time,
-            style: TextStyle(
-              fontSize: timeFontSize, // Adjust font size based on screen width
+            style: GoogleFonts.poppins(
+              fontSize: 18,
               color: Colors.grey,
+              letterSpacing: .16,
+              fontWeight: FontWeight.w400,
+
             ),
           ),
         ],

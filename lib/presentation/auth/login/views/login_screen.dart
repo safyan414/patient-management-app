@@ -16,6 +16,7 @@ import '../../../../global/app_theme/app_colors.dart';
 import '../../../../global/widget/app_button.dart';
 import '../../../../global/widget/app_text_form_field.dart';
 import '../../../../global/widget/app_text_widget.dart';
+import '../../../../responsive/responsive.dart';
 import '../../../patients/views/patients_list_screen.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -103,8 +104,8 @@ class LoginScreen extends StatelessWidget {
                                 content: Column(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
-                                    const SizedBox(
-                                      height: 70,
+                                     SizedBox(
+                                      height:Responsive.isMobile(context)?32: 70,
                                     ),
                                     SvgPicture.asset(
                                       AppIcons.doneIcon,
@@ -112,26 +113,26 @@ class LoginScreen extends StatelessWidget {
                                       width: 100,
                                       fit:BoxFit.fill,
                                     ),
-                                    const SizedBox(
-                                      height: 70,
+                                     SizedBox(
+                                      height:Responsive.isMobile(context)?32: 70,
                                     ),
                                     Text(
                                       "Congratulations",
                                       style: GoogleFonts.poppins(
-                                        fontSize: 44,
+                                        fontSize: Responsive.isMobile(context)?20:44,
                                         color: AppColors.darkTextColor,
                                         fontWeight: FontWeight.w600,
                                       ),
                                       overflow: TextOverflow.ellipsis,
                                       maxLines: 1,
                                     ),
-                                    const SizedBox(
-                                      height: 17,
+                                     SizedBox(
+                                      height:Responsive.isMobile(context)?8: 17,
                                     ),
                                     Text(
                                       "Your account is ready to use. You will be redirected to the Home Page in a few seconds...",
                                       style: GoogleFonts.poppins(
-                                        fontSize: 30,
+                                        fontSize:Responsive.isMobile(context)?14: 30,
                                         fontWeight: FontWeight.w600,
                                         color: AppColors.darkAppGreyColor,
                                       ),
@@ -140,15 +141,15 @@ class LoginScreen extends StatelessWidget {
                                       maxLines: 3,
 
                                     ),
-                                    const SizedBox(
-                                      height: 70,
+                                     SizedBox(
+                                      height: Responsive.isMobile(context)?32:70,
                                     ),
-                                    const SpinKitFadingCircle(
+                                     SpinKitFadingCircle(
                                       color: AppColors.primaryColor,
-                                      size: 40.0,
+                                      size: Responsive.isMobile(context)?20:40.0,
                                     ),
-                                    const SizedBox(
-                                      height: 70,
+                                     SizedBox(
+                                      height: Responsive.isMobile(context)?32:70,
                                     ),
                                   ],
                                 ),

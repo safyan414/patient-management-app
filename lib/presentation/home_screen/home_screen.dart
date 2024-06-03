@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:patient_management/presentation/home_screen/widget/doctor_widget.dart';
-
 import '../../config/routes/app_routes.dart';
 import '../../constants/app_assets/app_images.dart';
 import '../../global/app_theme/app_colors.dart';
@@ -80,7 +79,8 @@ class HomeScreen extends StatelessWidget {
                             Responsive.isMobile(context) ? 90 : 90),
                     itemBuilder: (context, index) => DoctorWidget(
                           doctorModel: homeController.doctorList[index],
-                        )),
+                        ),
+                ),
               ),
             ],
           ),

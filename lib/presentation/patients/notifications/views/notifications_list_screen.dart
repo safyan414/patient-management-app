@@ -54,86 +54,95 @@ class NotificationsListScreen extends StatelessWidget {
         time: '10:0$index AM',
       ),
     );
-
-    // Other code remains the same
-
     return Scaffold(
       backgroundColor: AppColors.white,
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                padding: Responsive.isMobile(context)
-                    ? const EdgeInsets.only(left: 24, right: 24)
-                    : const EdgeInsets.only(left: 40, right: 40),
-                child: Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    InkWell(
-                        onTap: () {
-                          Get.back();
-                        },
-                        child: SvgPicture.asset(
-                          AppIcons.arrowBack,
-                          color: const Color(0xff374151),
-                          height: 34,
-                          width: 34,
-                        )),
-                    Text(
-                      'Notifications',
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(height:Responsive.isMobile(context)?10: 20),
+
+            Container(
+              padding:
+                  // Responsive.isMobile(context)
+                  //     ?
+                  const EdgeInsets.only(left: 20, right: 20),
+              // : const EdgeInsets.only(left: 40, right: 40),
+              child: Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  InkWell(
+                      onTap: () {
+                        Get.back();
+                      },
+                      child: SvgPicture.asset(
+                        AppIcons.arrowBack,
+                        color: const Color(0xff374151),
+                        height: 34,
+                        width: 34,
+                      )),
+                  Text(
+                    'Notifications',
+                    style: GoogleFonts.poppins(
+                        fontSize: Responsive.isMobile(context) ? 16 : 34,
+                        fontWeight: FontWeight.w600,
+                        color: const Color(0xff374151)),
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                        color: AppColors.primaryColor,
+                        borderRadius: BorderRadius.circular(8)),
+                    padding: Responsive.isMobile(context)
+                        ? const EdgeInsets.only(
+                            left: 16, right: 16, top: 8, bottom: 8)
+                        : const EdgeInsets.only(
+                            left: 32, right: 32, top: 16, bottom: 16),
+                    child: Text(
+                      "1 New",
                       style: GoogleFonts.poppins(
-                          fontSize: Responsive.isMobile(context) ? 16 : 34,
-                          fontWeight: FontWeight.w600,
-                          color: const Color(0xff374151)),
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                          color: AppColors.primaryColor,
-                          borderRadius: BorderRadius.circular(8)),
-                      padding: Responsive.isMobile(context)
-                          ? const EdgeInsets.only(
-                              left: 16, right: 16, top: 8, bottom: 8)
-                          : const EdgeInsets.only(
-                              left: 32, right: 32, top: 16, bottom: 16),
-                      child: Text(
-                        "1 New",
-                        style: GoogleFonts.poppins(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 14,
-                          color: AppColors.white,
-                        ),
+                        fontWeight: FontWeight.w600,
+                        fontSize: Responsive.isMobile(context) ? 14 : 28,
+                        color: AppColors.white,
                       ),
-                    )
+                    ),
+                  )
+                ],
+              ),
+            ),
+             SizedBox(height:Responsive.isMobile(context)?10: 20),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    NotificationSection(
+                      title: 'Today',
+                      notifications: todayNotifications,
+                      titleFontSize: titleFontSize,
+                      buttonFontSize: buttonFontSize,
+                    ),
+                    SizedBox(height:Responsive.isMobile(context)?10: 20),
+                    NotificationSection(
+                      title: 'Yesterday',
+                      notifications: yesterdayNotifications,
+                      titleFontSize: titleFontSize,
+                      buttonFontSize: buttonFontSize,
+                    ),
+                    SizedBox(height:Responsive.isMobile(context)?10: 20),
+                    NotificationSection(
+                      title: 'Previous',
+                      notifications: previousNotifications,
+                      titleFontSize: titleFontSize,
+                      buttonFontSize: buttonFontSize,
+                    ),
+                    SizedBox(height:Responsive.isMobile(context)?10: 20),
                   ],
                 ),
               ),
-              NotificationSection(
-                title: 'Today',
-                notifications: todayNotifications,
-                titleFontSize: titleFontSize,
-                buttonFontSize: buttonFontSize,
-              ),
-              const SizedBox(height: 20),
-              NotificationSection(
-                title: 'Yesterday',
-                notifications: yesterdayNotifications,
-                titleFontSize: titleFontSize,
-                buttonFontSize: buttonFontSize,
-              ),
-              const SizedBox(height: 20),
-              NotificationSection(
-                title: 'Previous',
-                notifications: previousNotifications,
-                titleFontSize: titleFontSize,
-                buttonFontSize: buttonFontSize,
-              ),
-              const SizedBox(height: 20),
-              // Other sections remain the same
-            ],
-          ),
+            )
+
+            // Other sections remain the same
+          ],
         ),
       ),
     );
@@ -163,11 +172,11 @@ class NotificationSection extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Padding(
-              padding: const EdgeInsets.only(left: 15.0),
+              padding: const EdgeInsets.only(left: 24, right: 24),
               child: Text(
                 title,
                 style: TextStyle(
-                  fontSize: titleFontSize,
+                  fontSize: Responsive.isMobile(context) ? 16 : 32,
                   fontWeight: FontWeight.w400,
                 ),
               ),
@@ -179,7 +188,7 @@ class NotificationSection extends StatelessWidget {
               child: AppTextWidget(
                 text: 'Mark all as read',
                 color: AppColors.darkTextColor,
-                fontSize: buttonFontSize,
+                fontSize: Responsive.isMobile(context) ? 16 : 32,
                 fontWeight: FontWeight.w700,
               ),
             ),

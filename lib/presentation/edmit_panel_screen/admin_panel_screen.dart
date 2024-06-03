@@ -6,6 +6,7 @@ import 'package:patient_management/config/routes/app_routes.dart';
 import 'package:patient_management/constants/app_assets/app_icons.dart';
 import 'package:patient_management/presentation/edmit_panel_screen/add_doctor_detail_screen.dart';
 import 'package:patient_management/presentation/edmit_panel_screen/widget/admin_panel_widget.dart';
+import 'package:patient_management/presentation/edmit_panel_screen/widget/end_drawer.dart';
 import '../../global/app_theme/app_colors.dart';
 import '../../responsive/responsive.dart';
 import 'admin_panel_controller.dart';
@@ -13,10 +14,27 @@ import 'admin_panel_controller.dart';
 class AdminPanelScreen extends StatelessWidget {
   AdminPanelScreen({super.key});
   final AdminPanelController homeController = Get.put(AdminPanelController());
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // key: _scaffoldKey,
+      // endDrawer: Drawer(
+      //   child: Container(
+      //     color: Colors.red,
+      //     child:
+      //     ListView(
+      //       children: [
+      //         Container(
+      //           height: 200,
+      //         )
+      //
+      //       ],
+      //     ),
+      //   ),
+      //
+      // ),
       backgroundColor: AppColors.primaryColor,
       floatingActionButton: Container(
         decoration: const BoxDecoration(
@@ -56,7 +74,10 @@ class AdminPanelScreen extends StatelessWidget {
                             Get.back();
                           },
                           child: SvgPicture.asset(AppIcons.arrowBack)),
-                      SvgPicture.asset(AppIcons.settingIcons),
+                      InkWell(
+                        onTap: () => Scaffold.of(context).openDrawer(),
+                        child: SvgPicture.asset(AppIcons.settingIcons),
+                      ),
                     ],
                   ),
                   SizedBox(
