@@ -15,7 +15,8 @@ import 'admin_panel_controller.dart';
 class AdminPanelScreen extends StatelessWidget {
   AdminPanelScreen({super.key});
   final AdminPanelController homeController = Get.put(AdminPanelController());
-  final AddDoctorController addDoctorController = Get.put(AddDoctorController());
+  final AddDoctorController addDoctorController =
+      Get.put(AddDoctorController());
 
   @override
   Widget build(BuildContext context) {
@@ -110,9 +111,11 @@ class AdminPanelScreen extends StatelessWidget {
                     Expanded(
                       child: StreamBuilder<List<Doctor>>(
                         stream: addDoctorController.getDoctors(),
-                        builder: (context, snapshot)  {
-                          if(snapshot.connectionState == ConnectionState.waiting){
-                            return const Center(child: CircularProgressIndicator());
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const Center(
+                                child: CircularProgressIndicator());
                           }
                           if (snapshot.hasError) {
                             return Text('Error: ${snapshot.error}');
@@ -123,23 +126,25 @@ class AdminPanelScreen extends StatelessWidget {
                           }
 
                           final doctorList = snapshot.data!;
-                          return  GridView.builder(
+                          return GridView.builder(
                             itemCount: doctorList.length,
                             shrinkWrap: true,
                             physics: const ScrollPhysics(),
-                            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount:
-                                Responsive.isMobile(context) ? 1 : 2,
-                                crossAxisSpacing:
-                                Responsive.isMobile(context) ? 12 : 15,
-                                mainAxisSpacing: 12.0,
-                                mainAxisExtent:
-                                Responsive.isMobile(context) ? 90 : 90),
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: Responsive.isMobile(context)
+                                        ? 1
+                                        : 2,
+                                    crossAxisSpacing:
+                                        Responsive.isMobile(context) ? 12 : 15,
+                                    mainAxisSpacing: 12.0,
+                                    mainAxisExtent:
+                                        Responsive.isMobile(context) ? 90 : 90),
                             itemBuilder: (context, index) => Container(
-                              padding: const EdgeInsets.only(left: 24, right: 24),
+                              padding:
+                                  const EdgeInsets.only(left: 24, right: 24),
                               child: AdminPanelWidget(
-                                doctorModel:
-                                doctorList[index],
+                                doctorModel: doctorList[index],
                               ),
                             ),
                           );

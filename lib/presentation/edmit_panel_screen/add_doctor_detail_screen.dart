@@ -18,7 +18,7 @@ import '../edit_doctor_detail/edit_doctor_detail_controller.dart';
 
 class AddDoctorDetailScreen extends StatelessWidget {
   TextEditingController nameTextController = TextEditingController();
-  TextEditingController emailTextController= TextEditingController();
+  TextEditingController emailTextController = TextEditingController();
   TextEditingController nickNameTextController = TextEditingController();
   TextEditingController passwordTextController = TextEditingController();
   TextEditingController nameController4 = TextEditingController();
@@ -53,12 +53,13 @@ class AddDoctorDetailScreen extends StatelessWidget {
                       Text(
                         "Add Doctor Details",
                         style: GoogleFonts.poppins(
-                          fontSize: 34,
+                          fontSize: Responsive.isMobile(context) ? 17 : 34,
                           fontWeight: FontWeight.w600,
                           color: AppColors.white,
                         ),
                       ),
-                      Container()                    ],
+                      Container()
+                    ],
                   ),
                   SizedBox(
                     height: Responsive.isMobile(context) ? 10 : 34,
@@ -89,7 +90,9 @@ class AddDoctorDetailScreen extends StatelessWidget {
                         : const EdgeInsets.only(left: 144, right: 112),
                     child: Column(
                       children: [
-                      const   SizedBox(height: 34,),
+                        SizedBox(
+                          height: Responsive.isMobile(context) ? 17 : 34,
+                        ),
                         Row(
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -101,47 +104,65 @@ class AddDoctorDetailScreen extends StatelessWidget {
                             )
                           ],
                         ),
+                        SizedBox(
+                          height: Responsive.isMobile(context) ? 5 : 10,
+                        ),
                         Text(
                           "Add Doctor",
                           style: GoogleFonts.poppins(
-                            fontSize: 34,
+                            fontSize: Responsive.isMobile(context) ? 17 : 34,
                             fontWeight: FontWeight.w600,
                             color: AppColors.darkGunmetal,
                           ),
                         ),
+                        SizedBox(
+                          height: Responsive.isMobile(context) ? 5 : 10,
+                        ),
                         Text(
                           "Add doctor detail here",
                           style: GoogleFonts.poppins(
-                            fontSize: 24,
+                            fontSize: Responsive.isMobile(context) ? 12 : 24,
                             fontWeight: FontWeight.w400,
                             color: AppColors.slateGray,
                           ),
                         ),
+                        SizedBox(
+                          height: Responsive.isMobile(context) ? 5 : 10,
+                        ),
                         Obx(
-                         ()=> Stack(
+                          () => Stack(
                             children: [
-                           controller.pickedImage.value != '' ?
-                           CircleAvatar(
-                               radius: 100, // Adjust the radius as needed
-                               backgroundColor: Colors.white,
-                               child:
-                               ClipRRect(
-                                   borderRadius: BorderRadius.circular(100),
-                                   child: Image.file(File(controller.pickedImage.value.toString()),fit: BoxFit.cover,height: 160,width: 160,))) :
-                           CircleAvatar(
-                                  radius: 100, // Adjust the radius as needed
-                                  backgroundColor: Colors.white,
-                                  child:
-                                      Image.asset(AppImages.icPlaceHolderImage)),
+                              controller.pickedImage.value != ''
+                                  ? CircleAvatar(
+                                      radius:
+                                      Responsive.isMobile(context) ? 50:  100, // Adjust the radius as needed
+                                      backgroundColor: Colors.white,
+                                      child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(100),
+                                          child: Image.file(
+                                            File(controller.pickedImage.value
+                                                .toString()),
+                                            fit: BoxFit.cover,
+                                            height:Responsive.isMobile(context) ?80: 160,
+                                            width:Responsive.isMobile(context) ?80: 160,
+                                          )))
+                                  : CircleAvatar(
+                                  radius:
+                                  Responsive.isMobile(context) ? 50:  100, // Adjust the radius as needed
+                                      backgroundColor: Colors.white,
+                                      child: Image.asset(
+                                          AppImages.icPlaceHolderImage)),
                               Positioned(
-                                bottom: 40,
-                                right: 25,
+                                bottom:Responsive.isMobile(context) ?20: 40,
+                                right:Responsive.isMobile(context) ?13: 25,
                                 child: CircleAvatar(
-                                    radius: 15, // Adjust the radius as needed
+                                    radius: Responsive.isMobile(context) ?8:15, // Adjust the radius as needed
                                     backgroundColor: Colors.blue,
                                     child: InkWell(
-                                        onTap: ()=> controller.pickImage(),
-                                        child: Image.asset(AppImages.editImage))),
+                                        onTap: () => controller.pickImage(),
+                                        child:
+                                            Image.asset(AppImages.editImage))),
                               ),
                             ],
                           ),
@@ -155,9 +176,8 @@ class AddDoctorDetailScreen extends StatelessWidget {
                           onTap: () {},
                           filledColor: AppColors.whiteSmoke,
                         ),
-                        const SizedBox(
-                          height: 20,
-                        ),
+                        SizedBox(height:Responsive.isMobile(context)?10: 20,),
+
                         AppTextFormField(
                           borderColor: const Color(0xffD1D5DB),
                           hintText: "Nick name",
@@ -167,9 +187,8 @@ class AddDoctorDetailScreen extends StatelessWidget {
                           onTap: () {},
                           filledColor: AppColors.whiteSmoke,
                         ),
-                        const SizedBox(
-                          height: 20,
-                        ),
+                        SizedBox(height:Responsive.isMobile(context)?10: 20,),
+
                         AppTextFormField(
                           borderColor: const Color(0xffD1D5DB),
                           hintText: "name@Example.com",
@@ -179,9 +198,8 @@ class AddDoctorDetailScreen extends StatelessWidget {
                           onTap: () {},
                           filledColor: AppColors.whiteSmoke,
                         ),
-                        const SizedBox(
-                          height: 20,
-                        ),
+                        SizedBox(height:Responsive.isMobile(context)?10: 20,),
+
                         AppTextFormField(
                           borderColor: const Color(0xffD1D5DB),
                           hintText: "password",
@@ -191,42 +209,53 @@ class AddDoctorDetailScreen extends StatelessWidget {
                           onTap: () {},
                           filledColor: AppColors.whiteSmoke,
                         ),
-                        const SizedBox(
-                          height: 20,
-                        ),
+                        SizedBox(height:Responsive.isMobile(context)?10: 20,),
+
                         Obx(() => DropdownButtonFormField<String>(
-                          value: controller.selectedGender.value.isEmpty ? 'Male' : controller.selectedGender.value,
-                          items: ['Male', 'Female'].map((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value,style: const TextStyle(
-                                  fontFamily: AppFont.poppinsFont,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w300,
-                                  color: AppColors.gray500),textAlign: TextAlign.center,),
-                            );
-                          }).toList(),
-                          onChanged: (newValue) {
-                            controller.selectedGender.value = newValue!;
-                          },
-                          decoration: InputDecoration(
-                            filled: true,
-                            fillColor: AppColors.whiteSmoke,
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              borderSide: const BorderSide(color: Color(0xffD1D5DB)),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              borderSide: const BorderSide(color: Color(0xffD1D5DB)),
-                            ),
-                          ),
-                        )),
-                        const SizedBox(
-                          height: 32,
-                        ),
+                              value: controller.selectedGender.value.isEmpty
+                                  ? 'Male'
+                                  : controller.selectedGender.value,
+                              items: ['Male', 'Female'].map((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(
+                                    value,
+                                    style: const TextStyle(
+                                        fontFamily: AppFont.poppinsFont,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w300,
+                                        color: AppColors.gray500),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                );
+                              }).toList(),
+                              onChanged: (newValue) {
+                                controller.selectedGender.value = newValue!;
+                              },
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: AppColors.whiteSmoke,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide: const BorderSide(
+                                      color: Color(0xffD1D5DB)),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide: const BorderSide(
+                                      color: Color(0xffD1D5DB)),
+                                ),
+                              ),
+                            )),
+                        SizedBox(height:Responsive.isMobile(context)?16: 32,),
+
                         AppButton(
-                          onPressed:()=> controller.addDoctor(name: nameTextController.text,email: emailTextController.text,password: passwordTextController.text,nickName: nickNameTextController.text,),
+                          onPressed: () => controller.addDoctor(
+                            name: nameTextController.text,
+                            email: emailTextController.text,
+                            password: passwordTextController.text,
+                            nickName: nickNameTextController.text,
+                          ),
                           titleText: "Add",
                           buttonColor: AppColors.primaryColor,
                           textColor: AppColors.white,
