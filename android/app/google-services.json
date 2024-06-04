@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "324754500620",
+    "project_id": "patientmanagement-9046d",
+    "storage_bucket": "patientmanagement-9046d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:324754500620:android:2e96e30b3038a9db9a9229",
+        "android_client_info": {
+          "package_name": "com.grazelgracia.patient_management"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBNj8XZ0z46Lvi5fffty7v6jtW6yeRs-kg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
