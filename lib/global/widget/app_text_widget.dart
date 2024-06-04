@@ -1,6 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../../constants/app_assets/app_font.dart';
 
@@ -33,8 +32,8 @@ class AppTextWidget extends StatelessWidget {
     return AutoSizeText(text,
         softWrap: true,
         textAlign: textAlign,
-        style: GoogleFonts.poppins(
-          // fontFamily: AppFont.poppinsFont,
+        style: TextStyle(
+          fontFamily: AppFont.poppinsFont,
           color: color,
           wordSpacing: wordSpacing,
           fontSize: fontSize,

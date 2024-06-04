@@ -44,7 +44,7 @@ class AppTextFormField extends StatelessWidget {
         color: filledColor ?? AppColors.white,
       ),
       child: Padding(
-        padding: EdgeInsets.only(top: 15.0, left: width > 600 ? 10 : 0),
+        padding: EdgeInsets.only(top: 10.0, left: width > 600 ? 10 : 0),
         child: Center(
           child: TextFormField(
             keyboardType: inputType,
@@ -59,16 +59,20 @@ class AppTextFormField extends StatelessWidget {
                 fontWeight: FontWeight.w300,
                 color: AppColors.gray500),
             decoration: InputDecoration(
-              contentPadding: const EdgeInsets.only(left: 10, right: 10),
+              contentPadding: const EdgeInsets.only(right: 10),
               hintStyle: const TextStyle(color: AppColors.coolGray),
               hintText: hintText,
               suffixIcon: SizedBox(
                   height: height * 0.02, width: width * 0.02, child: widget),
-              prefixIcon: Container(
+              prefixIcon: Visibility(
+                visible: prefixIcon != null,
+                child: Container(
                   margin: const EdgeInsets.only(bottom: 10),
                   height: height * 0.05, // Adjusted height
                   width: width * 0.05,
-                  child: prefixIcon),
+                  child: prefixIcon,
+                ),
+              ),
               border: const OutlineInputBorder(borderSide: BorderSide.none),
             ),
           ),

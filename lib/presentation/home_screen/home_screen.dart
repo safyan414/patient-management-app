@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:patient_management/presentation/edit_doctor_detail/edit_doctor_detail_controller.dart';
 import 'package:patient_management/presentation/home_screen/widget/doctor_widget.dart';
+
 import '../../config/routes/app_routes.dart';
 import '../../constants/app_assets/app_images.dart';
 import '../../global/app_theme/app_colors.dart';
 import '../../responsive/responsive.dart';
+import '../edit_doctor_detail/models/doctor_model.dart';
 import 'home_controller.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
   final HomeController homeController = Get.put(HomeController());
+  final AddDoctorController addDoctorController = Get.put(AddDoctorController());
 
 
   @override
@@ -66,22 +70,39 @@ class HomeScreen extends StatelessWidget {
                 height: 8,
               ),
               Expanded(
-                child: GridView.builder(
-                    itemCount: homeController.doctorList.length,
-                    shrinkWrap: true,
-                    physics: const ScrollPhysics(),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: Responsive.isMobile(context) ? 1 : 2,
-                        crossAxisSpacing:
+                child: StreamBuilder<List<Doctor>>(
+                  stream: addDoctorController.getDoctors(),
+                  builder: (context, snapshot) {
+                    if(snapshot.connectionState == ConnectionState.waiting){
+                      return const Center(child: CircularProgressIndicator());
+                    }
+                    if (snapshot.hasError) {
+                      return Text('Error: ${snapshot.error}');
+                    }
+
+                    if (!snapshot.hasData) {
+                      return Center(child: CircularProgressIndicator());
+                    }
+
+                    final doctorList = snapshot.data!; // List of doctors
+
+                    return GridView.builder(
+                        itemCount: doctorList.length,
+                        shrinkWrap: true,
+                        physics: const ScrollPhysics(),
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: Responsive.isMobile(context) ? 1 : 2,
+                            crossAxisSpacing:
                             Responsive.isMobile(context) ? 12 : 15,
-                        mainAxisSpacing: 12.0,
-                        mainAxisExtent:
+                            mainAxisSpacing: 12.0,
+                            mainAxisExtent:
                             Responsive.isMobile(context) ? 90 : 90),
-                    itemBuilder: (context, index) => DoctorWidget(
-                          doctorModel: homeController.doctorList[index],
-                        ),
+                        itemBuilder: (context, index) => DoctorWidget(
+                          doctorModel: doctorList[index],
+                        ));
+                  },
                 ),
-              ),
+              )
             ],
           ),
         ),

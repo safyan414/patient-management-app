@@ -4,37 +4,22 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:patient_management/config/routes/app_routes.dart';
 import 'package:patient_management/constants/app_assets/app_icons.dart';
+import 'package:patient_management/presentation/edit_doctor_detail/edit_doctor_detail_controller.dart';
 import 'package:patient_management/presentation/edmit_panel_screen/add_doctor_detail_screen.dart';
 import 'package:patient_management/presentation/edmit_panel_screen/widget/admin_panel_widget.dart';
-import 'package:patient_management/presentation/edmit_panel_screen/widget/end_drawer.dart';
 import '../../global/app_theme/app_colors.dart';
 import '../../responsive/responsive.dart';
+import '../edit_doctor_detail/models/doctor_model.dart';
 import 'admin_panel_controller.dart';
 
 class AdminPanelScreen extends StatelessWidget {
   AdminPanelScreen({super.key});
   final AdminPanelController homeController = Get.put(AdminPanelController());
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final AddDoctorController addDoctorController = Get.put(AddDoctorController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // key: _scaffoldKey,
-      // endDrawer: Drawer(
-      //   child: Container(
-      //     color: Colors.red,
-      //     child:
-      //     ListView(
-      //       children: [
-      //         Container(
-      //           height: 200,
-      //         )
-      //
-      //       ],
-      //     ),
-      //   ),
-      //
-      // ),
       backgroundColor: AppColors.primaryColor,
       floatingActionButton: Container(
         decoration: const BoxDecoration(
@@ -42,7 +27,6 @@ class AdminPanelScreen extends StatelessWidget {
         child: InkWell(
           onTap: () {
             Get.toNamed(addDoctorDetailScreen);
-
             // Get.to(() => const ComposedScreen(), transition: Transition.upToDown);
           },
           child: Container(
@@ -74,10 +58,7 @@ class AdminPanelScreen extends StatelessWidget {
                             Get.back();
                           },
                           child: SvgPicture.asset(AppIcons.arrowBack)),
-                      InkWell(
-                        onTap: () => Scaffold.of(context).openDrawer(),
-                        child: SvgPicture.asset(AppIcons.settingIcons),
-                      ),
+                      SvgPicture.asset(AppIcons.settingIcons),
                     ],
                   ),
                   SizedBox(
@@ -127,25 +108,42 @@ class AdminPanelScreen extends StatelessWidget {
                       height: 16,
                     ),
                     Expanded(
-                      child: GridView.builder(
-                        itemCount: homeController.adminPanelList.length,
-                        shrinkWrap: true,
-                        physics: const ScrollPhysics(),
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount:
+                      child: StreamBuilder<List<Doctor>>(
+                        stream: addDoctorController.getDoctors(),
+                        builder: (context, snapshot)  {
+                          if(snapshot.connectionState == ConnectionState.waiting){
+                            return const Center(child: CircularProgressIndicator());
+                          }
+                          if (snapshot.hasError) {
+                            return Text('Error: ${snapshot.error}');
+                          }
+
+                          if (!snapshot.hasData) {
+                            return Center(child: CircularProgressIndicator());
+                          }
+
+                          final doctorList = snapshot.data!;
+                          return  GridView.builder(
+                            itemCount: doctorList.length,
+                            shrinkWrap: true,
+                            physics: const ScrollPhysics(),
+                            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount:
                                 Responsive.isMobile(context) ? 1 : 2,
-                            crossAxisSpacing:
+                                crossAxisSpacing:
                                 Responsive.isMobile(context) ? 12 : 15,
-                            mainAxisSpacing: 12.0,
-                            mainAxisExtent:
+                                mainAxisSpacing: 12.0,
+                                mainAxisExtent:
                                 Responsive.isMobile(context) ? 90 : 90),
-                        itemBuilder: (context, index) => Container(
-                          padding: const EdgeInsets.only(left: 24, right: 24),
-                          child: AdminPanelWidget(
-                            adminPanelModel:
-                                homeController.adminPanelList[index],
-                          ),
-                        ),
+                            itemBuilder: (context, index) => Container(
+                              padding: const EdgeInsets.only(left: 24, right: 24),
+                              child: AdminPanelWidget(
+                                doctorModel:
+                                doctorList[index],
+                              ),
+                            ),
+                          );
+                        },
                       ),
                     ),
                   ],

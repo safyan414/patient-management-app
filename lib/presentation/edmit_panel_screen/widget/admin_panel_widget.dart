@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:patient_management/constants/app_assets/app_icons.dart';
+import 'package:patient_management/presentation/edit_doctor_detail/models/doctor_model.dart';
 
 import '../../../config/routes/app_routes.dart';
 import '../../../global/app_theme/app_colors.dart';
@@ -12,17 +13,16 @@ import '../../../responsive/responsive.dart';
 import '../model/admin_panel_model.dart';
 
 class AdminPanelWidget extends StatelessWidget {
-  AdminPanelWidget({super.key, required this.adminPanelModel});
-  AdminPanelModel adminPanelModel;
+  AdminPanelWidget({super.key, required this.doctorModel});
+  Doctor doctorModel;
   TextEditingController nameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-
-      },
+      onTap: () {},
       child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 5),
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(10),
@@ -39,8 +39,17 @@ class AdminPanelWidget extends StatelessWidget {
           child: Row(
             mainAxisSize: MainAxisSize.max,
             children: [
-              Image.asset(
-                adminPanelModel.imageUrl.toString(),
+              Container(
+                margin: EdgeInsets.only(left: 10),
+                height: 150,
+                width: 85,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: Image.network(
+                    doctorModel.imageUrl.toString(),
+                    fit: BoxFit.cover,
+                  ),
+                ),
               ),
               const SizedBox(
                 width: 12,
@@ -51,7 +60,7 @@ class AdminPanelWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      adminPanelModel.name.toString(),
+                      doctorModel.name.toString(),
                       style: GoogleFonts.poppins(
                         fontSize: 16,
                         fontWeight: FontWeight.w700,
@@ -59,7 +68,7 @@ class AdminPanelWidget extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      adminPanelModel.tittle.toString(),
+                      doctorModel.nickName.toString(),
                       style: GoogleFonts.poppins(
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
@@ -86,7 +95,9 @@ class AdminPanelWidget extends StatelessWidget {
                               content: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                const   SizedBox(height: 46,),
+                                  const SizedBox(
+                                    height: 46,
+                                  ),
                                   Center(
                                       child: Text(
                                     'Delete',
@@ -95,11 +106,13 @@ class AdminPanelWidget extends StatelessWidget {
                                         fontSize: 24,
                                         color: AppColors.darkSlateGray),
                                   )),
-                                  const   SizedBox(height: 30,),
-
+                                  const SizedBox(
+                                    height: 30,
+                                  ),
                                   const Divider(),
-                                  const   SizedBox(height: 30,),
-
+                                  const SizedBox(
+                                    height: 30,
+                                  ),
                                   Text(
                                     'Are you sure you want to delete?',
                                     style: GoogleFonts.poppins(
@@ -107,42 +120,37 @@ class AdminPanelWidget extends StatelessWidget {
                                         fontSize: 30,
                                         color: AppColors.darkSlateGray),
                                   ),
-                                  const   SizedBox(height: 46,),
-
-
-                                    Row(
-                                      children: [
-                                        Expanded(
-                                          child: AppButton(
-                                            borderRadius: 30,
-
-                                            onPressed: () {
-
-                                            },
-                                            titleText: "Cancel",
-                                            buttonColor: Color(0xffE5E7EB),
-                                            textColor: AppColors.white,
-
-                                          ),
+                                  const SizedBox(
+                                    height: 46,
+                                  ),
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: AppButton(
+                                          borderRadius: 30,
+                                          onPressed: () {},
+                                          titleText: "Cancel",
+                                          buttonColor: Color(0xffE5E7EB),
+                                          textColor: AppColors.white,
                                         ),
-                                      const   SizedBox(width: 30,),
-                                        Expanded(
-                                          child: AppButton(
-                                            borderRadius: 30,
-
-                                            onPressed: () {
-
-                                            },
-                                            titleText: "Yes, delete",
-                                            buttonColor: AppColors.primaryColor,
-                                            textColor: AppColors.white,
-
-                                          ),
+                                      ),
+                                      const SizedBox(
+                                        width: 30,
+                                      ),
+                                      Expanded(
+                                        child: AppButton(
+                                          borderRadius: 30,
+                                          onPressed: () {},
+                                          titleText: "Yes, delete",
+                                          buttonColor: AppColors.primaryColor,
+                                          textColor: AppColors.white,
                                         ),
-                                      ],
-                                    ),
-                                  const   SizedBox(height: 46,),
-
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 46,
+                                  ),
                                 ],
                               ),
                             );
@@ -154,9 +162,9 @@ class AdminPanelWidget extends StatelessWidget {
                     width: 14,
                   ),
                   InkWell(
-                    onTap: () {
-                     Get.toNamed(editDoctorDetailScreen);
-                    },
+                      onTap: () {
+                        Get.toNamed(editDoctorDetailScreen,arguments: {'doctorModel': doctorModel});
+                      },
                       child: SvgPicture.asset(AppIcons.editIcon)),
                   const SizedBox(
                     width: 17,
