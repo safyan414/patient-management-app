@@ -1,33 +1,80 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:patient_management/app_util/app_util.dart';
 import 'package:patient_management/config/routes/app_routes.dart';
+import 'package:patient_management/local_db/hive_helper.dart';
 import 'package:patient_management/presentation/auth/login/views/login_screen.dart';
 
-import '../../../../constants/app_assets/app_icons.dart';
-import '../../../../global/app_theme/app_colors.dart';
+import '../../../../app_util/app_util.dart';
+import '../../../../app_util/firebase_auth_exception_handler.dart';
 
 class LoginController extends GetxController {
   final emailTextController = TextEditingController();
   final passwordTextController = TextEditingController();
+  RxBool isLoginLoading = false.obs;
 
   // Static credentials
-  final String correctEmail = 'user@example.com';
-  final String correctPassword = '123';
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  void login( String email,String password,BuildContext context) {
+// Admin credentials
+  final String adminEmail = 'admin@example.com';
+  final String adminPassword = '123';
 
-    if (email == correctEmail && password == correctPassword) {
-      LoginScreen().buildShowDialog(context);
-      // AppUtils.showLoginDialog(title: 'Congratulations', subtitle: 'Your account is ready to use. You will be redirected to the Home Page in a few seconds...', svgAsset: AppIcons.doneIcon, nextPage: homeScreen);
+  void login(String email, String password, BuildContext context) async {
+    isLoginLoading.value = true;
+    // Check if the credentials match the static admin credentials
+    if (email == adminEmail && password == adminPassword) {
+      HiveHelper.saveLoginStatus(isLoggedIn: true, isAdmin: true);
+      LoginScreen().buildShowDialog(context,homeScreen);
+      isLoginLoading.value = false;
+      // You can navigate to the admin home screen or perform any other action
     } else {
-      Get.snackbar(
-        'Error',
-        'Invalid email or password',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      // Try to authenticate with Firebase
+      try {
+        UserCredential userCredential = await _auth.signInWithEmailAndPassword(
+          email: email,
+          password: password,
+        );
+        if(userCredential.user != null){
+          HiveHelper.saveLoginStatus(isLoggedIn: true, isAdmin: false);
+          isLoginLoading.value = false;
+          AppUtils.appSnackbar(
+            title: 'Success',
+            message: 'Logged in successfully',
+            bgColor: Colors.green,
+          );
+          LoginScreen().buildShowDialog(context,patientsGridScreen);
+        }
+        else{
+          isLoginLoading.value = false;
+          AppUtils.appSnackbar(
+            title: 'Failure',
+            message: 'Something went wrong',
+            bgColor: Colors.green,
+          );
+        }
+      }
+      on FirebaseAuthException catch (e) {
+        isLoginLoading.value = false;
+
+        // Handle Firebase authentication errors using the new handler class
+        String errorMessage = FirebaseExceptionHandler.handleException(e);
+
+        AppUtils.appSnackbar(
+          title: 'Error',
+          message: errorMessage,
+          bgColor: Colors.red,
+        );
+      } catch (e) {
+        isLoginLoading.value = false;
+
+        // Handle other errors
+        AppUtils.appSnackbar(
+          title: 'Error',
+          message: e.toString(),
+          bgColor: Colors.red,
+        );
+      }
     }
   }
 }

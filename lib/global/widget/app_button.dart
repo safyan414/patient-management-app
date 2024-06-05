@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../main.dart';
 import '../app_theme/app_colors.dart';
+import 'app_loader.dart';
 import 'app_text_widget.dart';
 
 class AppButton extends StatelessWidget {
@@ -15,13 +16,14 @@ class AppButton extends StatelessWidget {
   final double? borderRadius;
   final FontWeight? fontWeight;
   final double? buttonWidth;
+  final bool showLoader;
   const AppButton({
     super.key,
     required this.titleText,
     required this.onPressed,
     required this.buttonColor,
     required this.textColor,
-    this.borderColor, this.fontSize, this.fontWeight, this.borderRadius, this.buttonWidth,
+    this.borderColor, this.fontSize, this.fontWeight, this.borderRadius, this.buttonWidth, this.showLoader = false,
   });
 
   @override
@@ -40,7 +42,13 @@ class AppButton extends StatelessWidget {
           ),
         ),
         child: Center(
-            child: AppTextWidget(
+            child:showLoader
+                ? SizedBox(
+              height: 25,
+              width: 25,
+              child: AppLoader(),
+            )
+                : AppTextWidget(
               text: titleText,
               fontSize: fontSize ?? 18,
               fontWeight:fontWeight?? FontWeight.w500,

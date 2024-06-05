@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../main.dart';
 import '../../constants/app_assets/app_font.dart';
+import '../../responsive/responsive.dart';
 import '../app_theme/app_colors.dart';
 
 typedef String? CustomValidator(String? value);
@@ -44,7 +45,7 @@ class AppTextFormField extends StatelessWidget {
         color: filledColor ?? AppColors.white,
       ),
       child: Padding(
-        padding: EdgeInsets.only(top: 10.0, left: width > 600 ? 10 : 0),
+        padding: EdgeInsets.only(top: Responsive.isMobile(context) ? 0.0 : 10, left: Responsive.isMobile(context) ? 10 : 10),
         child: Center(
           child: TextFormField(
             keyboardType: inputType,
@@ -59,20 +60,18 @@ class AppTextFormField extends StatelessWidget {
                 fontWeight: FontWeight.w300,
                 color: AppColors.gray500),
             decoration: InputDecoration(
-              contentPadding: const EdgeInsets.only(right: 10),
+              contentPadding:  EdgeInsets.only(right: Responsive.isMobile(context) ? 0 : 10),
               hintStyle: const TextStyle(color: AppColors.coolGray),
               hintText: hintText,
               suffixIcon: SizedBox(
                   height: height * 0.02, width: width * 0.02, child: widget),
-              prefixIcon: Visibility(
-                visible: prefixIcon != null,
-                child: Container(
-                  margin: const EdgeInsets.only(bottom: 10),
-                  height: height * 0.05, // Adjusted height
-                  width: width * 0.05,
-                  child: prefixIcon,
-                ),
-              ),
+              prefixIcon: prefixIcon != null ? Container(
+                margin: const EdgeInsets.only(bottom: 10),
+                padding: EdgeInsets.only(top:Responsive.isMobile(context) ?9 : 0,bottom:Responsive.isMobile(context) ?5 : 0,left: 0,right: 0 ),
+                height: height * 0.03, // Adjusted height
+                width: width * 0.1,
+                child: prefixIcon,
+              ) : null,
               border: const OutlineInputBorder(borderSide: BorderSide.none),
             ),
           ),

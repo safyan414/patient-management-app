@@ -11,6 +11,7 @@ import 'package:patient_management/presentation/edmit_panel_screen/add_doctor_de
 import 'package:patient_management/presentation/edmit_panel_screen/widget/admin_panel_widget.dart';
 import '../../constants/app_assets/app_images.dart';
 import '../../global/app_theme/app_colors.dart';
+import '../../global/widget/app_text_widget.dart';
 import '../../responsive/responsive.dart';
 import '../edit_doctor_detail/models/doctor_model.dart';
 import 'admin_panel_controller.dart';

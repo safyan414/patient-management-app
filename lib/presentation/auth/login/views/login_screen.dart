@@ -85,25 +85,29 @@ class LoginScreen extends StatelessWidget {
                           inputType: TextInputType.visiblePassword,
                           hintText: 'Enter your password',
                           prefixIcon: SvgPicture.asset(
-                            AppIcons.passwordIcon, // Adjusted width
+                            AppIcons.passwordIcon,
+
+                            // Adjusted width
                           ),
                         ),
                         SizedBox(height: height * 0.04),
-                        AppButton(
-                          titleText: 'Sign in',
-                          onPressed: () {
-                            loginController.login(emailTextController.text,
-                                passwordTextController.text, context);
-                            // buildShowDialog(context);
-                          },
-                          //     AppUtils.showLoginDialog(
-                          //   nextPage: homeScreen,
-                          //   title: 'Congratulations',
-                          //   subtitle: 'Please wait',
-                          //   svgAsset: AppIcons.doneIcon,
-                          // ),
-                          buttonColor: AppColors.primaryColor,
-                          textColor: AppColors.white,
+                        Obx(
+                          ()=> AppButton(
+                            showLoader: loginController.isLoginLoading.value,
+                            titleText: 'Sign in',
+                            onPressed: () {
+                              loginController.login(emailTextController.text, passwordTextController.text,context);
+                              // buildShowDialog(context);
+                            },
+                            //     AppUtils.showLoginDialog(
+                            //   nextPage: homeScreen,
+                            //   title: 'Congratulations',
+                            //   subtitle: 'Please wait',
+                            //   svgAsset: AppIcons.doneIcon,
+                            // ),
+                            buttonColor: AppColors.primaryColor,
+                            textColor: AppColors.white,
+                          ),
                         ),
                         SizedBox(height: height * 0.02),
                         RichText(
@@ -138,83 +142,85 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  Future<dynamic> buildShowDialog(BuildContext context) {
+  Future<dynamic> buildShowDialog(BuildContext context,var nextScreen) {
     return showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        Future.delayed(Duration(seconds: 2), () {
-          Get.back(); // Close the dialog
-          Get.toNamed(homeScreen); // Navigate to the next page
-        });
+                          context: context,
+                          builder: (BuildContext context) {
+                            Future.delayed(Duration(seconds: 2), () {
+                              Get.back(); // Close the dialog
+                              Get.offAndToNamed(nextScreen); // Navigate to the next page
+                            });
 
-        return AlertDialog(
-          backgroundColor: AppColors.white,
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const SizedBox(
-                height: 70,
-              ),
-              SvgPicture.asset(
-                AppIcons.doneIcon,
-                height: 100,
-                width: 100,
-                fit: BoxFit.fill,
-              ),
-              const SizedBox(
-                height: 70,
-              ),
-              Text(
-                "Congratulations",
-                style: GoogleFonts.poppins(
-                  fontSize: 44,
-                  color: AppColors.darkTextColor,
-                  fontWeight: FontWeight.w600,
-                ),
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1,
-              ),
-              const SizedBox(
-                height: 17,
-              ),
-              Text(
-                "Your account is ready to use. You will be redirected to the Home Page in a few seconds...",
-                style: GoogleFonts.poppins(
-                  fontSize: 30,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.darkAppGreyColor,
-                ),
-                textAlign: TextAlign.center,
-                overflow: TextOverflow.ellipsis,
-                maxLines: 3,
-              ),
-              const SizedBox(
-                height: 70,
-              ),
-              const SpinKitFadingCircle(
-                color: AppColors.primaryColor,
-                size: 40.0,
-              ),
-              const SizedBox(
-                height: 70,
-              ),
-            ],
-          ),
+                            return AlertDialog(
 
-          // actions: [
-          //   AppButton(
-          //     onPressed: () {
-          //
-          //     },
-          //     titleText: "Arrived",
-          //     buttonColor: AppColors.primaryColor,
-          //     textColor: AppColors.white,
-          //
-          //   ),
-          //   SizedBox(height: Responsive.isMobile(context)?50:100,),
-          // ],
-        );
-      },
-    );
+                              backgroundColor: AppColors.white,
+                              content: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  const SizedBox(
+                                    height: 70,
+                                  ),
+                                  SvgPicture.asset(
+                                    AppIcons.doneIcon,
+                                    height: 100,
+                                    width: 100,
+                                    fit:BoxFit.fill,
+                                  ),
+                                  const SizedBox(
+                                    height: 70,
+                                  ),
+                                  Text(
+                                    "Congratulations",
+                                    style: GoogleFonts.poppins(
+                                      fontSize: 44,
+                                      color: AppColors.darkTextColor,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 1,
+                                  ),
+                                  const SizedBox(
+                                    height: 17,
+                                  ),
+                                  Text(
+                                    "Your account is ready to use. You will be redirected to the Home Page in a few seconds...",
+                                    style: GoogleFonts.poppins(
+                                      fontSize: 30,
+                                      fontWeight: FontWeight.w600,
+                                      color: AppColors.darkAppGreyColor,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 3,
+
+                                  ),
+                                  const SizedBox(
+                                    height: 70,
+                                  ),
+                                  const SpinKitFadingCircle(
+                                    color: AppColors.primaryColor,
+                                    size: 40.0,
+                                  ),
+                                  const SizedBox(
+                                    height: 70,
+                                  ),
+                                ],
+                              ),
+
+                              // actions: [
+                              //   AppButton(
+                              //     onPressed: () {
+                              //
+                              //     },
+                              //     titleText: "Arrived",
+                              //     buttonColor: AppColors.primaryColor,
+                              //     textColor: AppColors.white,
+                              //
+                              //   ),
+                              //   SizedBox(height: Responsive.isMobile(context)?50:100,),
+                              // ],
+                            );
+                          },
+                        );
   }
 }
