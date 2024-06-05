@@ -6,23 +6,23 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:patient_management/config/routes/app_routes.dart';
 import 'package:patient_management/constants/app_assets/app_icons.dart';
-import 'package:patient_management/presentation/edit_doctor_detail/edit_doctor_detail_controller.dart';
 import 'package:patient_management/presentation/edmit_panel_screen/add_doctor_detail_screen.dart';
 import 'package:patient_management/presentation/edmit_panel_screen/widget/admin_panel_widget.dart';
 import '../../constants/app_assets/app_images.dart';
 import '../../global/app_theme/app_colors.dart';
 import '../../global/widget/app_text_widget.dart';
 import '../../responsive/responsive.dart';
+import '../edit_doctor_detail/add_edit_doctor_controller.dart';
 import '../edit_doctor_detail/models/doctor_model.dart';
 import 'admin_panel_controller.dart';
 
 class AdminPanelScreen extends StatelessWidget {
   AdminPanelScreen({super.key});
   final AdminPanelController homeController = Get.put(AdminPanelController());
-  final AddDoctorController addDoctorController =
-      Get.put(AddDoctorController());
+
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  final AddDoctorController controller = Get.put(AddDoctorController());
+  final AddEditDoctorController addEditDoctorController =
+      Get.put(AddEditDoctorController());
 
   @override
   Widget build(BuildContext context) {
@@ -35,146 +35,269 @@ class AdminPanelScreen extends StatelessWidget {
           child: ListView(
             padding: EdgeInsets.zero,
             children: <Widget>[
-              Column(
-                children: [
-                  SizedBox(
-                    height: Responsive.isMobile(context) ? 17 : 34,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(),
-                      Text(
-                        'Settings',
-                        style: GoogleFonts.poppins(
-                            fontWeight: FontWeight.w600,
-                            fontSize: Responsive.isMobile(context)?18:25,
-                            color: Colors.black),
+              Container(
+                padding: Responsive.isMobile(context)
+                    ? const EdgeInsets.only(left: 15, right: 15)
+                    : const EdgeInsets.only(left: 30, right: 30),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: Responsive.isMobile(context) ? 17 : 34,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(),
+                        Text(
+                          'Settings',
+                          style: GoogleFonts.poppins(
+                              fontWeight: FontWeight.w600,
+                              fontSize: Responsive.isMobile(context) ? 18 : 25,
+                              color: Colors.black),
+                        ),
+                        SvgPicture.asset(AppIcons.crossIcons)
+                      ],
+                    ),
+                    SizedBox(
+                      height: Responsive.isMobile(context) ? 8 : 16,
+                    ),
+                    Obx(
+                      () => Stack(
+                        children: [
+                          addEditDoctorController.pickedImage.value != ''
+                              ? CircleAvatar(
+                                  radius: Responsive.isMobile(context)
+                                      ? 50
+                                      : 100, // Adjust the radius as needed
+                                  backgroundColor: Colors.white,
+                                  child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(100),
+                                      child: Image.file(
+                                        File(addEditDoctorController
+                                            .pickedImage.value
+                                            .toString()),
+                                        fit: BoxFit.cover,
+                                        height: Responsive.isMobile(context)
+                                            ? 80
+                                            : 160,
+                                        width: Responsive.isMobile(context)
+                                            ? 80
+                                            : 160,
+                                      )))
+                              : CircleAvatar(
+                                  radius: Responsive.isMobile(context)
+                                      ? 50
+                                      : 100, // Adjust the radius as needed
+                                  backgroundColor: Colors.white,
+                                  child: Image.asset(
+                                      AppImages.icPlaceHolderImage)),
+                          Positioned(
+                            bottom: Responsive.isMobile(context) ? 20 : 40,
+                            right: Responsive.isMobile(context) ? 13 : 25,
+                            child: CircleAvatar(
+                                radius: Responsive.isMobile(context)
+                                    ? 8
+                                    : 15, // Adjust the radius as needed
+                                backgroundColor: Colors.blue,
+                                child: InkWell(
+                                    onTap: () =>
+                                        addEditDoctorController.pickImage(),
+                                    child: Image.asset(AppImages.editImage))),
+                          ),
+                        ],
                       ),
-                      SvgPicture.asset(AppIcons.crossIcons)
-                    ],
-                  ),
-                  SizedBox(
-                    height: Responsive.isMobile(context) ? 8 : 16,
-                  ),
-                  Obx(
-                    () => Stack(
-                      children: [
-                        controller.pickedImage.value != ''
-                            ? CircleAvatar(
-                                radius: Responsive.isMobile(context)
-                                    ? 50
-                                    : 100, // Adjust the radius as needed
-                                backgroundColor: Colors.white,
-                                child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(100),
-                                    child: Image.file(
-                                      File(controller.pickedImage.value
-                                          .toString()),
-                                      fit: BoxFit.cover,
-                                      height: Responsive.isMobile(context)
-                                          ? 80
-                                          : 160,
-                                      width: Responsive.isMobile(context)
-                                          ? 80
-                                          : 160,
-                                    )))
-                            : CircleAvatar(
-                                radius: Responsive.isMobile(context)
-                                    ? 50
-                                    : 100, // Adjust the radius as needed
-                                backgroundColor: Colors.white,
-                                child:
-                                    Image.asset(AppImages.icPlaceHolderImage)),
-                        Positioned(
-                          bottom: Responsive.isMobile(context) ? 20 : 40,
-                          right: Responsive.isMobile(context) ? 13 : 25,
-                          child: CircleAvatar(
-                              radius: Responsive.isMobile(context)
-                                  ? 8
-                                  : 15, // Adjust the radius as needed
-                              backgroundColor: Colors.blue,
-                              child: InkWell(
-                                  onTap: () => controller.pickImage(),
-                                  child: Image.asset(AppImages.editImage))),
-                        ),
-                      ],
                     ),
-                  ),
-                  Container(
-                    padding: Responsive.isMobile(context)
-                        ?const  EdgeInsets.only(left: 12, right: 12)
-                        :const EdgeInsets.only(left: 24, right: 24),
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    InkWell(
+                      onTap: () {
+                        Get.toNamed(addDoctorDetailScreen);
+                      },
+                      child: Container(
+                        padding: Responsive.isMobile(context)
+                            ? const EdgeInsets.only(left: 12, right: 12)
+                            : const EdgeInsets.only(left: 24, right: 24),
+                        child: Column(
                           children: [
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                SvgPicture.asset(AppIcons.userEdit),
-                                 SizedBox(
-                                  width: Responsive.isMobile(context)?8:16,
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    SvgPicture.asset(AppIcons.userEdit),
+                                    SizedBox(
+                                      width:
+                                          Responsive.isMobile(context) ? 8 : 16,
+                                    ),
+                                    Text(
+                                      "Edit Business Profile",
+                                      style: GoogleFonts.poppins(
+                                          fontSize: Responsive.isMobile(context)
+                                              ? 14
+                                              : 18,
+                                          fontWeight: FontWeight.w400,
+                                          color: const Color(0xff6B7280)),
+                                    ),
+                                  ],
                                 ),
-                                Text(
-                                  "Edit Business Profile",
-                                  style: GoogleFonts.poppins(
-                                      fontSize:Responsive.isMobile(context)?14: 18,
-                                      fontWeight: FontWeight.w400,
-                                      color: const Color(0xff6B7280)),
-                                ),
+                                SvgPicture.asset(AppIcons.arrowForward),
                               ],
                             ),
-                            SvgPicture.asset(AppIcons.arrowForward),
-                          ],
-                        ),
-                         SizedBox(
-                          height:Responsive.isMobile(context)?6: 12,
-                        ),
-                        const Divider(
-                          color: Color(0xffE5E7EB),
-                        ),
-                        SizedBox(
-                          height:Responsive.isMobile(context)?6: 12,
-                        ),           Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
+                            SizedBox(
+                              height: Responsive.isMobile(context) ? 6 : 12,
+                            ),
+                            const Divider(
+                              color: Color(0xffE5E7EB),
+                            ),
+                            SizedBox(
+                              height: Responsive.isMobile(context) ? 6 : 12,
+                            ),
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                SvgPicture.asset(AppIcons.userEdit),
-                                 SizedBox(
-                                  width: Responsive.isMobile(context)?8:16,
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    SvgPicture.asset(AppIcons.notificationEditOne),
+                                    SizedBox(
+                                      width:
+                                          Responsive.isMobile(context) ? 8 : 16,
+                                    ),
+                                    Text(
+                                      "Notifications",
+                                      style: GoogleFonts.poppins(
+                                          fontSize: Responsive.isMobile(context)
+                                              ? 14
+                                              : 18,
+                                          fontWeight: FontWeight.w400,
+                                          color: const Color(0xff6B7280)),
+                                    ),
+                                  ],
                                 ),
-                                Text(
-                                  "Edit Business Profile",
-                                  style: GoogleFonts.poppins(
-                                      fontSize:Responsive.isMobile(context)?14: 18,
-                                      fontWeight: FontWeight.w400,
-                                      color: const Color(0xff6B7280)),
-                                ),
+                                SvgPicture.asset(AppIcons.arrowForward),
                               ],
                             ),
-                            SvgPicture.asset(AppIcons.arrowForward),
+                            SizedBox(
+                              height: Responsive.isMobile(context) ? 6 : 12,
+                            ),
+                            const Divider(
+                              color: Color(0xffE5E7EB),
+                            ),
+                            SizedBox(
+                              height: Responsive.isMobile(context) ? 6 : 12,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    SvgPicture.asset(AppIcons.helpAndSupportIcon),
+                                    SizedBox(
+                                      width:
+                                          Responsive.isMobile(context) ? 8 : 16,
+                                    ),
+                                    Text(
+                                      "Help and Support",
+                                      style: GoogleFonts.poppins(
+                                          fontSize: Responsive.isMobile(context)
+                                              ? 14
+                                              : 18,
+                                          fontWeight: FontWeight.w400,
+                                          color: const Color(0xff6B7280)),
+                                    ),
+                                  ],
+                                ),
+                                SvgPicture.asset(AppIcons.arrowForward),
+                              ],
+                            ),
+                            SizedBox(
+                              height: Responsive.isMobile(context) ? 6 : 12,
+                            ),
+                            const Divider(
+                              color: Color(0xffE5E7EB),
+                            ),
+                            SizedBox(
+                              height: Responsive.isMobile(context) ? 6 : 12,
+                            ),
+                            SizedBox(
+                              height: Responsive.isMobile(context) ? 6 : 12,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    SvgPicture.asset(AppIcons.termAndConditions),
+                                    SizedBox(
+                                      width:
+                                          Responsive.isMobile(context) ? 8 : 16,
+                                    ),
+                                    Text(
+                                      "Term and Conditions",
+                                      style: GoogleFonts.poppins(
+                                          fontSize: Responsive.isMobile(context)
+                                              ? 14
+                                              : 18,
+                                          fontWeight: FontWeight.w400,
+                                          color: const Color(0xff6B7280)),
+                                    ),
+                                  ],
+                                ),
+                                SvgPicture.asset(AppIcons.arrowForward),
+                              ],
+                            ),
+                            SizedBox(
+                              height: Responsive.isMobile(context) ? 6 : 12,
+                            ),
+                            const Divider(
+                              color: Color(0xffE5E7EB),
+                            ),
+                            SizedBox(
+                              height: Responsive.isMobile(context) ? 6 : 12,
+                            ),           Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    SvgPicture.asset(AppIcons.logoutIcon),
+                                    SizedBox(
+                                      width:
+                                          Responsive.isMobile(context) ? 8 : 16,
+                                    ),
+                                    Text(
+                                      "Log Out",
+                                      style: GoogleFonts.poppins(
+                                          fontSize: Responsive.isMobile(context)
+                                              ? 14
+                                              : 18,
+                                          fontWeight: FontWeight.w400,
+                                          color: const Color(0xff6B7280)),
+                                    ),
+                                  ],
+                                ),
+                                SvgPicture.asset(AppIcons.arrowForward),
+                              ],
+                            ),
+                            SizedBox(
+                              height: Responsive.isMobile(context) ? 6 : 12,
+                            ),
+                            const Divider(
+                              color: Color(0xffE5E7EB),
+                            ),
+                            SizedBox(
+                              height: Responsive.isMobile(context) ? 6 : 12,
+                            ),
                           ],
                         ),
-                         SizedBox(
-                          height:Responsive.isMobile(context)?6: 12,
-                        ),
-                        const Divider(
-                          color: Color(0xffE5E7EB),
-                        ),
-                        SizedBox(
-                          height:Responsive.isMobile(context)?6: 12,
-                        ),
-                      ],
+                      ),
                     ),
-                  ),
-                   SizedBox(
-                    height: Responsive.isMobile(context)?6:12,
-                  )
-                ],
+                    SizedBox(
+                      height: Responsive.isMobile(context) ? 6 : 12,
+                    )
+                  ],
+                ),
               ),
             ],
           ),
@@ -273,7 +396,7 @@ class AdminPanelScreen extends StatelessWidget {
                     ),
                     Expanded(
                       child: StreamBuilder<List<Doctor>>(
-                        stream: addDoctorController.getDoctors(),
+                        stream: addEditDoctorController.getDoctors(),
                         builder: (context, snapshot) {
                           if (snapshot.connectionState ==
                               ConnectionState.waiting) {
