@@ -12,5 +12,8 @@ class AppIcons{
   static String passwordIcon = '${baseIconPath}password_icon.svg';
   static String emailIcon = '${baseIconPath}email_icon.svg';
   static String notificationIcon = '${baseIconPath}notification_icon.svg';
+  static String crossIcons = 'assets/icons/ic_cross_icons.svg';
+  static String arrowForward = 'assets/icons/ic_arrow_forward.svg';
+  static String userEdit = 'assets/icons/ic_user_edit.svg';
 
 }

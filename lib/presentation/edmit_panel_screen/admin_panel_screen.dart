@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -7,6 +9,7 @@ import 'package:patient_management/constants/app_assets/app_icons.dart';
 import 'package:patient_management/presentation/edit_doctor_detail/edit_doctor_detail_controller.dart';
 import 'package:patient_management/presentation/edmit_panel_screen/add_doctor_detail_screen.dart';
 import 'package:patient_management/presentation/edmit_panel_screen/widget/admin_panel_widget.dart';
+import '../../constants/app_assets/app_images.dart';
 import '../../global/app_theme/app_colors.dart';
 import '../../responsive/responsive.dart';
 import '../edit_doctor_detail/models/doctor_model.dart';
@@ -17,10 +20,165 @@ class AdminPanelScreen extends StatelessWidget {
   final AdminPanelController homeController = Get.put(AdminPanelController());
   final AddDoctorController addDoctorController =
       Get.put(AddDoctorController());
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final AddDoctorController controller = Get.put(AddDoctorController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
+      endDrawer: Container(
+        padding: const EdgeInsets.only(top: 80, bottom: 20),
+        child: Drawer(
+          backgroundColor: AppColors.white,
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: <Widget>[
+              Column(
+                children: [
+                  SizedBox(
+                    height: Responsive.isMobile(context) ? 17 : 34,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(),
+                      Text(
+                        'Settings',
+                        style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w600,
+                            fontSize: Responsive.isMobile(context)?18:25,
+                            color: Colors.black),
+                      ),
+                      SvgPicture.asset(AppIcons.crossIcons)
+                    ],
+                  ),
+                  SizedBox(
+                    height: Responsive.isMobile(context) ? 8 : 16,
+                  ),
+                  Obx(
+                    () => Stack(
+                      children: [
+                        controller.pickedImage.value != ''
+                            ? CircleAvatar(
+                                radius: Responsive.isMobile(context)
+                                    ? 50
+                                    : 100, // Adjust the radius as needed
+                                backgroundColor: Colors.white,
+                                child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(100),
+                                    child: Image.file(
+                                      File(controller.pickedImage.value
+                                          .toString()),
+                                      fit: BoxFit.cover,
+                                      height: Responsive.isMobile(context)
+                                          ? 80
+                                          : 160,
+                                      width: Responsive.isMobile(context)
+                                          ? 80
+                                          : 160,
+                                    )))
+                            : CircleAvatar(
+                                radius: Responsive.isMobile(context)
+                                    ? 50
+                                    : 100, // Adjust the radius as needed
+                                backgroundColor: Colors.white,
+                                child:
+                                    Image.asset(AppImages.icPlaceHolderImage)),
+                        Positioned(
+                          bottom: Responsive.isMobile(context) ? 20 : 40,
+                          right: Responsive.isMobile(context) ? 13 : 25,
+                          child: CircleAvatar(
+                              radius: Responsive.isMobile(context)
+                                  ? 8
+                                  : 15, // Adjust the radius as needed
+                              backgroundColor: Colors.blue,
+                              child: InkWell(
+                                  onTap: () => controller.pickImage(),
+                                  child: Image.asset(AppImages.editImage))),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    padding: Responsive.isMobile(context)
+                        ?const  EdgeInsets.only(left: 12, right: 12)
+                        :const EdgeInsets.only(left: 24, right: 24),
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                SvgPicture.asset(AppIcons.userEdit),
+                                 SizedBox(
+                                  width: Responsive.isMobile(context)?8:16,
+                                ),
+                                Text(
+                                  "Edit Business Profile",
+                                  style: GoogleFonts.poppins(
+                                      fontSize:Responsive.isMobile(context)?14: 18,
+                                      fontWeight: FontWeight.w400,
+                                      color: const Color(0xff6B7280)),
+                                ),
+                              ],
+                            ),
+                            SvgPicture.asset(AppIcons.arrowForward),
+                          ],
+                        ),
+                         SizedBox(
+                          height:Responsive.isMobile(context)?6: 12,
+                        ),
+                        const Divider(
+                          color: Color(0xffE5E7EB),
+                        ),
+                        SizedBox(
+                          height:Responsive.isMobile(context)?6: 12,
+                        ),           Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                SvgPicture.asset(AppIcons.userEdit),
+                                 SizedBox(
+                                  width: Responsive.isMobile(context)?8:16,
+                                ),
+                                Text(
+                                  "Edit Business Profile",
+                                  style: GoogleFonts.poppins(
+                                      fontSize:Responsive.isMobile(context)?14: 18,
+                                      fontWeight: FontWeight.w400,
+                                      color: const Color(0xff6B7280)),
+                                ),
+                              ],
+                            ),
+                            SvgPicture.asset(AppIcons.arrowForward),
+                          ],
+                        ),
+                         SizedBox(
+                          height:Responsive.isMobile(context)?6: 12,
+                        ),
+                        const Divider(
+                          color: Color(0xffE5E7EB),
+                        ),
+                        SizedBox(
+                          height:Responsive.isMobile(context)?6: 12,
+                        ),
+                      ],
+                    ),
+                  ),
+                   SizedBox(
+                    height: Responsive.isMobile(context)?6:12,
+                  )
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
       backgroundColor: AppColors.primaryColor,
       floatingActionButton: Container(
         decoration: const BoxDecoration(
@@ -59,7 +217,11 @@ class AdminPanelScreen extends StatelessWidget {
                             Get.back();
                           },
                           child: SvgPicture.asset(AppIcons.arrowBack)),
-                      SvgPicture.asset(AppIcons.settingIcons),
+                      InkWell(
+                          onTap: () {
+                            _scaffoldKey.currentState?.openEndDrawer();
+                          },
+                          child: SvgPicture.asset(AppIcons.settingIcons)),
                     ],
                   ),
                   SizedBox(

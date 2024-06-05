@@ -4,6 +4,7 @@ import '../../constants/app_assets/app_images.dart';
 import 'model/admin_panel_model.dart';
 
 class AdminPanelController extends GetxController {
+
   final adminPanelList = [
     AdminPanelModel(
         imageUrl: AppImages.doctorImageOne,
