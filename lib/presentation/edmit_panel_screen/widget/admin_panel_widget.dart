@@ -3,7 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:patient_management/constants/app_assets/app_icons.dart';
-import 'package:patient_management/presentation/edit_doctor_detail/edit_doctor_detail_controller.dart';
+import 'package:patient_management/presentation/edit_doctor_detail/add_edit_doctor_controller.dart';
 import 'package:patient_management/presentation/edit_doctor_detail/models/doctor_model.dart';
 
 import '../../../config/routes/app_routes.dart';
@@ -17,7 +17,7 @@ class AdminPanelWidget extends StatelessWidget {
   AdminPanelWidget({super.key, required this.doctorModel});
   Doctor doctorModel;
   TextEditingController nameController = TextEditingController();
-  final AddDoctorController addDoctorController = Get.find<AddDoctorController>();
+  final AddEditDoctorController addDoctorController = Get.find<AddEditDoctorController>();
 
   @override
   Widget build(BuildContext context) {

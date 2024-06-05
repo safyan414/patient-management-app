@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
@@ -10,7 +11,7 @@ import 'package:patient_management/app_util/app_util.dart';
 import '../../global/app_theme/app_colors.dart';
 import 'models/doctor_model.dart';
 
-class AddDoctorController extends GetxController {
+class AddEditDoctorController extends GetxController {
   // RxString pickedImage = ''.obs;
   final pickedImage = RxString('').obs;
   RxBool isLoading = false.obs;
@@ -18,6 +19,7 @@ class AddDoctorController extends GetxController {
   var selectedGender = ''.obs;
 
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   Future<void> addDoctor({
     required String name,
@@ -25,8 +27,21 @@ class AddDoctorController extends GetxController {
     required String password,
     required String nickName,
   }) async {
-    isLoading = true.obs;
-    final doctorId = _firestore.collection('doctors').doc().id;
+    isLoading.value = true;
+    UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
+    String? doctorId;
+    if(userCredential.user != null){
+      doctorId = userCredential.user!.uid;
+    }
+    else
+      {
+        isLoading.value = false;
+        return;
+      }
+
     final fileName = '$doctorId.jpg';
     debugPrint('doc image file name:$fileName');
 
@@ -37,13 +52,13 @@ class AddDoctorController extends GetxController {
     try {
       await uploadTask;
     } on FirebaseException catch (e) {
-      isLoading = false.obs;
+      isLoading.value = false;
       AppUtils.appSnackbar(title: 'Error Uploading Image',message:  e.message!,
           bgColor: AppColors.darkAppGreyColor);
       return;
     }
     catch(e){
-      isLoading = false.obs;
+      isLoading.value = false;
       AppUtils.appSnackbar(title: 'Error Uploading Image',message:  e.toString()!,
           bgColor: AppColors.darkAppGreyColor);
       return;
@@ -67,12 +82,12 @@ class AddDoctorController extends GetxController {
           .then((val) {
         AppUtils.appSnackbar(title: 'Success',message:  'Doctor created successfully',
             bgColor: AppColors.gunMetalColor);
-        isLoading = false.obs;
+        isLoading.value = false;
         pickedImage.value = RxString('');
         selectedGender.value ='Male';
       });
     } catch (e) {
-      isLoading = false.obs;
+      isLoading.value = false;
       AppUtils.appSnackbar(title: 'Failure',message:  e.toString(),
           bgColor: AppColors.darkAppGreyColor);
     }

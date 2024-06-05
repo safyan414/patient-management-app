@@ -1,5 +1,7 @@
 
 import 'package:get/get.dart';
+import 'package:patient_management/presentation/patients/notifications/views/notifications_list_screen.dart';
+import 'package:patient_management/presentation/patients/views/patients_list_screen.dart';
 
 import '../../presentation/edit_doctor_detail/edit_doctor_detail_binding.dart';
 import '../../presentation/edit_doctor_detail/edit_doctor_detail_screen.dart';
@@ -32,7 +34,7 @@ class AppPages {
     return [
       GetPage(
         name: splashScreen,
-        page: () => const SplashScreen(),
+        page: () =>  SplashScreen(),
         // binding: LandingBinding(),
       ),
       GetPage(
@@ -59,6 +61,16 @@ class AppPages {
         page: () =>  EditDoctorDetailScreen(),
         binding: EditDoctorDetailBinding(),
         transition: Transition.downToUp,
+
+      ),
+      GetPage(
+        name: patientsGridScreen,
+        page: () =>  PatientGridScreen(),
+
+      ),
+      GetPage(
+        name: notificationsListScreen,
+        page: () =>  NotificationsListScreen(),
 
       ),
 

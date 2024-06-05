@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:patient_management/presentation/edit_doctor_detail/edit_doctor_detail_controller.dart';
+import 'package:patient_management/presentation/edit_doctor_detail/add_edit_doctor_controller.dart';
 import 'package:patient_management/presentation/edit_doctor_detail/models/doctor_model.dart';
 
 import '../../constants/app_assets/app_font.dart';
@@ -30,7 +30,7 @@ class _EditDoctorDetailScreenState extends State<EditDoctorDetailScreen> {
   late TextEditingController emailTextController = TextEditingController();
   late TextEditingController passwordTextController = TextEditingController();
   late TextEditingController genderTextController = TextEditingController();
-  final AddDoctorController addDoctorController = Get.find<AddDoctorController>();
+  final AddEditDoctorController addDoctorController = Get.find<AddEditDoctorController>();
   final arguments = Get.arguments;
    Doctor? doctorModel ;
 

@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:patient_management/config/routes/app_routes.dart';
 import 'package:patient_management/constants/app_assets/app_icons.dart';
-import 'package:patient_management/presentation/edit_doctor_detail/edit_doctor_detail_controller.dart';
+import 'package:patient_management/presentation/edit_doctor_detail/add_edit_doctor_controller.dart';
 import 'package:patient_management/presentation/edmit_panel_screen/widget/admin_panel_widget.dart';
 import '../../global/app_theme/app_colors.dart';
 import '../../global/widget/app_text_widget.dart';
@@ -15,7 +15,7 @@ import 'admin_panel_controller.dart';
 class AdminPanelScreen extends StatelessWidget {
   AdminPanelScreen({super.key});
   final AdminPanelController homeController = Get.put(AdminPanelController());
-  final AddDoctorController addDoctorController = Get.put(AddDoctorController());
+  final AddEditDoctorController addDoctorController = Get.put(AddEditDoctorController());
 
   @override
   Widget build(BuildContext context) {

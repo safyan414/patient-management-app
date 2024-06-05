@@ -85,24 +85,29 @@ class LoginScreen extends StatelessWidget {
                           inputType: TextInputType.visiblePassword,
                           hintText: 'Enter your password',
                           prefixIcon: SvgPicture.asset(
-                            AppIcons.passwordIcon, // Adjusted width
+                            AppIcons.passwordIcon,
+
+                            // Adjusted width
                           ),
                         ),
                         SizedBox(height: height * 0.04),
-                        AppButton(
-                          titleText: 'Sign in',
-                          onPressed: () {
-                            loginController.login(emailTextController.text, passwordTextController.text,context);
-                            // buildShowDialog(context);
-                          },
-                          //     AppUtils.showLoginDialog(
-                          //   nextPage: homeScreen,
-                          //   title: 'Congratulations',
-                          //   subtitle: 'Please wait',
-                          //   svgAsset: AppIcons.doneIcon,
-                          // ),
-                          buttonColor: AppColors.primaryColor,
-                          textColor: AppColors.white,
+                        Obx(
+                          ()=> AppButton(
+                            showLoader: loginController.isLoginLoading.value,
+                            titleText: 'Sign in',
+                            onPressed: () {
+                              loginController.login(emailTextController.text, passwordTextController.text,context);
+                              // buildShowDialog(context);
+                            },
+                            //     AppUtils.showLoginDialog(
+                            //   nextPage: homeScreen,
+                            //   title: 'Congratulations',
+                            //   subtitle: 'Please wait',
+                            //   svgAsset: AppIcons.doneIcon,
+                            // ),
+                            buttonColor: AppColors.primaryColor,
+                            textColor: AppColors.white,
+                          ),
                         ),
                         SizedBox(height: height * 0.02),
                         RichText(
@@ -137,13 +142,13 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  Future<dynamic> buildShowDialog(BuildContext context) {
+  Future<dynamic> buildShowDialog(BuildContext context,var nextScreen) {
     return showDialog(
                           context: context,
                           builder: (BuildContext context) {
                             Future.delayed(Duration(seconds: 2), () {
                               Get.back(); // Close the dialog
-                              Get.toNamed(homeScreen); // Navigate to the next page
+                              Get.offAndToNamed(nextScreen); // Navigate to the next page
                             });
 
                             return AlertDialog(

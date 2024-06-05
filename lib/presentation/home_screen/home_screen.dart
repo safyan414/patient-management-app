@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:patient_management/global/widget/app_text_widget.dart';
-import 'package:patient_management/presentation/edit_doctor_detail/edit_doctor_detail_controller.dart';
+import 'package:patient_management/presentation/edit_doctor_detail/add_edit_doctor_controller.dart';
 import 'package:patient_management/presentation/home_screen/widget/doctor_widget.dart';
 
 import '../../config/routes/app_routes.dart';
@@ -15,7 +15,7 @@ import 'home_controller.dart';
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
   final HomeController homeController = Get.put(HomeController());
-  final AddDoctorController addDoctorController = Get.put(AddDoctorController());
+  final AddEditDoctorController addDoctorController = Get.put(AddEditDoctorController());
 
 
   @override

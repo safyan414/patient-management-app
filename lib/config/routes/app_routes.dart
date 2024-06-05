@@ -4,4 +4,6 @@ const String homeScreen = '/homeScreen';
 const String adminPanelScreen = '/adminPanelScreen';
 const String addDoctorDetailScreen = '/addDoctorDetailScreen';
 const String editDoctorDetailScreen = '/editDoctorDetailScreen';
+const String patientsGridScreen = '/patientsGridScreen';
+const String notificationsListScreen = '/notificationsListScreen';
 

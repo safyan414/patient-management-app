@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:patient_management/config/routes/app_routes.dart';
 import '../../../constants/app_assets/app_icons.dart';
 import '../../../global/app_theme/app_colors.dart';
 import '../../../global/widget/app_text_widget.dart';
@@ -57,13 +58,7 @@ class PatientGridScreen extends StatelessWidget {
                     height: buttonIconSize,
                   ),
                   onPressed: () {
-                    Get.to( NotificationsListScreen(),);
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //     builder: (context) =>
-                    //   ),
-                    // );
+                    Get.toNamed(notificationsListScreen);
                   },
                 ),
               ],
