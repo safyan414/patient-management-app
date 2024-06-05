@@ -72,6 +72,8 @@ class AppUtils {
     //   return null;
     // }
   }
+
+ static SnackbarController appSnackbar({required String title,required String message ,required Color bgColor}) => Get.snackbar(title,message, backgroundColor: bgColor,colorText: AppColors.white,);
   // static void patientDetailDialog({
   //   // required String title,
   //   // required String subtitle,

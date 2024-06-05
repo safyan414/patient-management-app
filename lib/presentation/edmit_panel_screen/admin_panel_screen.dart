@@ -5,9 +5,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:patient_management/config/routes/app_routes.dart';
 import 'package:patient_management/constants/app_assets/app_icons.dart';
 import 'package:patient_management/presentation/edit_doctor_detail/edit_doctor_detail_controller.dart';
-import 'package:patient_management/presentation/edmit_panel_screen/add_doctor_detail_screen.dart';
 import 'package:patient_management/presentation/edmit_panel_screen/widget/admin_panel_widget.dart';
 import '../../global/app_theme/app_colors.dart';
+import '../../global/widget/app_text_widget.dart';
 import '../../responsive/responsive.dart';
 import '../edit_doctor_detail/models/doctor_model.dart';
 import 'admin_panel_controller.dart';
@@ -123,7 +123,7 @@ class AdminPanelScreen extends StatelessWidget {
                           }
 
                           final doctorList = snapshot.data!;
-                          return  GridView.builder(
+                          return doctorList.isEmpty? const Center(child: AppTextWidget(text: 'No doctor added', color: AppColors.black, fontSize: 13),):  GridView.builder(
                             itemCount: doctorList.length,
                             shrinkWrap: true,
                             physics: const ScrollPhysics(),

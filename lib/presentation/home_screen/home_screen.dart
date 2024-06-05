@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:patient_management/global/widget/app_text_widget.dart';
 import 'package:patient_management/presentation/edit_doctor_detail/edit_doctor_detail_controller.dart';
 import 'package:patient_management/presentation/home_screen/widget/doctor_widget.dart';
 
@@ -86,7 +87,7 @@ class HomeScreen extends StatelessWidget {
 
                     final doctorList = snapshot.data!; // List of doctors
 
-                    return GridView.builder(
+                    return doctorList.isEmpty? const Center(child: AppTextWidget(text: 'No doctor added', color: AppColors.black, fontSize: 13),): GridView.builder(
                         itemCount: doctorList.length,
                         shrinkWrap: true,
                         physics: const ScrollPhysics(),
